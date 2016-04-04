@@ -1,9 +1,22 @@
+import java.util.HashMap;
+
+
 
 public class Database {
 
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
+	HashMap<String, Integer> db; //Database
+	
+	public Database(){
+		db=new HashMap<String, Integer>();
+	}
+	
+	public void add(String key, int val){
+		db.put(key, val);
+	}
+	
+	public void update(String key, int val){
+		db.replace(key, val);
 	}
 
+	
 }
