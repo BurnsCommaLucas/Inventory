@@ -15,11 +15,11 @@ public class Database {
 	private final String NORI = "Nori";
 	private final String LETTUCE = "Lettuce";
 	private final String CROUTONS = "Croutons";
-	private final String DRESSING = "Dressing"
+	private final String DRESSING = "Dressing";
 	private final String MISO = "Miso";
 	private final String TOFU = "Tofu";
 	private final String SEAWEED = "Seaweed";
-	private final String EGG = "Egg"
+	private final String EGG = "Egg";
 	private final String BEEF = "Beef";
 	private final String GRAVY = "Gravy";
 	private final String GARLIC = "Garlic";
@@ -36,8 +36,8 @@ public class Database {
 	private final String TONIC = "Tonic";
 	private final String APPLE = "Apple";
 	private final String SCHMITTY_SAUCE = "SchmittySauce";
-	private final Char = '\n';
-	
+	private final char LINE = '\n';
+	private final int DEF = 200;
 	
 	
 	public Database(){
@@ -52,6 +52,54 @@ public class Database {
 		db.replace(key, val);
 	}
 
-	add("Chips",);
-	
+	public char getStockChar(String key, int amtReq)
+	{
+		if (db.containsKey(key))
+		{
+			if (db.get(key) > 0)
+			{
+				if (db.get(key) > amtReq)
+				{
+					return 'y';
+				}
+				return 'n';
+			}
+		}
+		return 'N';
+	}
+
+	public void init()
+	{
+		add(CHIPS, DEF);
+		add(CHEESE, DEF);
+		add(CHICKEN, DEF);
+		add(FRYING_OIL, DEF);
+		add(BREADING, DEF);
+		add(RICE, DEF);
+		add(SPAM, DEF);
+		add(NORI, DEF);
+		add(LETTUCE, DEF);
+		add(CROUTONS, DEF);
+		add(DRESSING, DEF);
+		add(MISO, DEF);
+		add(TOFU, DEF);
+		add(SEAWEED, DEF);
+		add(EGG, DEF);
+		add(BEEF, DEF);
+		add(GRAVY, DEF);
+		add(GARLIC, DEF);
+		add(SHOYU, DEF);
+		add(BREAD_BUNS, DEF);
+		add(OREO, DEF);
+		add(MOCHI_POWDER, DEF);
+		add(ICE_CREAM, DEF);
+		add(WATER, DEF);
+		add(COKE, DEF);
+		add(ROOT_BEER, DEF);
+		add(JACK, DEF);
+		add(VODKA, DEF);
+		add(TONIC, DEF);
+		add(APPLE, DEF);
+		add(SCHMITTY_SAUCE, DEF);
+	}
 }
