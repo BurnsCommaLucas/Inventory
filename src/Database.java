@@ -1,10 +1,12 @@
+import java.io.PrintWriter;
 import java.util.HashMap;
-
+import java.util.Iterator;
+import java.util.Map;
 
 
 public class Database {
 
-	HashMap<String, Integer> db; //Database
+	public static HashMap<String, Integer> db; //Database
 	private final String CHIPS = "Chips";
 	private final String CHEESE = "Cheese";
 	private final String CHICKEN = "Chicken";
@@ -36,7 +38,6 @@ public class Database {
 	private final String TONIC = "Tonic";
 	private final String APPLE = "Apple";
 	private final String SCHMITTY_SAUCE = "SchmittySauce";
-	private final char LINE = '\n';
 	private final int DEF = 200;
 	
 	
@@ -50,22 +51,6 @@ public class Database {
 	
 	public void update(String key, int val){
 		db.replace(key, val);
-	}
-
-	public char getStockChar(String key, int amtReq)
-	{
-		if (db.containsKey(key))
-		{
-			if (db.get(key) > 0)
-			{
-				if (db.get(key) > amtReq)
-				{
-					return 'y';
-				}
-				return 'n';
-			}
-		}
-		return 'N';
 	}
 
 	public void init()
@@ -101,5 +86,26 @@ public class Database {
 		add(TONIC, DEF);
 		add(APPLE, DEF);
 		add(SCHMITTY_SAUCE, DEF);
+	}
+
+	public static char getStockChar(Object key, int amtReq)
+	{
+		if (db.get(key) > 0)
+		{
+			if (db.get(key) > amtReq)
+			{
+				return 'y';
+			}
+			return 'n';
+		}
+		return 'N';
+	}
+
+	public static void printMap(PrintWriter writer, String[] foods, int[] nums) {
+		for (int i = 0; i < foods.length; i++) {
+			if (db.containsKey(foods[i])) {
+				writer.println(foods[i] + " " + nums[i] + " " + getStockChar(foods[i], nums[i]));
+			}
+		}
 	}
 }

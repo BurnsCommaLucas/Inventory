@@ -1,8 +1,6 @@
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.*;
 
 /**
  * Created by Lucas on 4/3/16.
@@ -16,6 +14,7 @@ public class Main {
         String name = ft.format(d);
         String outPath = "Test/Out/"; //     ../../Dropbox/CS 341/
         String inPath = "Test/In/";
+        String ext = ".txt";
 
         File outFolder = new File(outPath);
         File[] outFiles = outFolder.listFiles();
@@ -25,37 +24,43 @@ public class Main {
 
         System.out.println(ft.format(d));
 
-        if (outFiles != null)
-        {
-            for (File f : outFiles)
-            {
-                f.delete();
-            }
-        }
-
-        boolean bool = true;
-        readStart:  // Needed a statement for the goto statement
-        while (bool)
-        {
-            bool = false;
-        }
-        bool = true;
-
-        File inFolder = new File(inPath);
+        File inFolder = new File(outPath);
         File[] inFiles = inFolder.listFiles();
 
+        TimerTask task = new DirWatcher(inPath, "txt") {
+                protected void onChange(File file, String action) {
+                if (action == "add") {
+                    // Input first
+                    String[] foods = null;
+                    int[] nums = null;
 
-        PrintWriter writer = new PrintWriter(outPath + name);
-        for (int i = 0; i < 5; i++)
-        {
-            writer.println(i);
-        }
-        writer.close();
-    }
+                    try {
+                        FileReader fileReader = new FileReader(file);
+                        BufferedReader bufferedReader = new BufferedReader(fileReader);
+                        StringBuffer stringBuffer = new StringBuffer();
+                        String line;
+                        while ((line = bufferedReader.readLine()) != null) {
+                            stringBuffer.append(line);
+                            stringBuffer.append("\n");
+                        }
+                        fileReader.close();
+                        System.out.println("Contents of file:");
+                        System.out.println(stringBuffer.toString());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    // Then output
+                    try {
+                        PrintWriter writer = new PrintWriter(outPath + name + ext);
+                        db.printMap(writer, foods, nums);
+                        writer.close();
+                    } catch (FileNotFoundException e) {
+                    }
+                }
+            }
+        };
 
-    private boolean checkUpdated (File folder)
-    {
-        File[] files = folder.listFiles();
-        return false;
+        Timer timer = new Timer();
+        timer.schedule(task, new Date(), 1000);
     }
 }
