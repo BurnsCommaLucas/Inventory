@@ -2,6 +2,7 @@ import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Objects;
 
 
 public class Database {
@@ -50,8 +51,13 @@ public class Database {
 	}
 	
 	public void update(String key, int val){
+		if (db.get(key) - val < 0) { return; }
 		db.replace(key, val);
 	}
+
+	public boolean includes(Object key) { return db.containsKey(key); }
+
+	public int getStock(Object key) { return db.get(key); }
 
 	public void init()
 	{
@@ -99,13 +105,5 @@ public class Database {
 			return 'n';
 		}
 		return 'N';
-	}
-
-	public static void printMap(PrintWriter writer, String[] foods, int[] nums) {
-		for (int i = 0; i < foods.length; i++) {
-			if (db.containsKey(foods[i])) {
-				writer.println(foods[i] + " " + nums[i] + " " + getStockChar(foods[i], nums[i]));
-			}
-		}
 	}
 }
