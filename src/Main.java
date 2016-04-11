@@ -10,8 +10,8 @@ public class Main {
     public static Integer[] nums;
     public static String[] names;
     public static String[] raws;
-    public static String cookPath = "Test/Out/"; //     ../../Dropbox/CS 341/
-    public static String managePath = "Test/Out/"; //     ../../Dropbox/CS 341/
+    public static String cookPath = "Test/Out/Cooks/"; //     ../../Dropbox/CS 341/
+    private static String managePath = "Test/Out/Mgmt/"; //     ../../Dropbox/CS 341/
     public static String inPath = "Test/In/";
     public static String cookExt = ".txt";
     public static String manageExt = ".txt";
@@ -21,12 +21,8 @@ public class Main {
     public static void main(String[] args) throws FileNotFoundException {
         SimpleDateFormat ft = new SimpleDateFormat ("yyyy.MM.dd 'at' HH.mm.ss");
 
-        File outFolder = new File(cookPath);
-        File[] outFiles = outFolder.listFiles();
-        for (int i = 0; i < outFiles.length; i++)
-        {
-            outFiles[i].delete();
-        }
+        emptyFolder(cookPath);
+        emptyFolder(managePath);
 
         db = new Database();
         db.init();
@@ -40,6 +36,7 @@ public class Main {
                     Date d = new Date();
                     fileName = ft.format(d);
 
+                    // First get input
                     System.out.println("huh");
                     try {
                         FileReader fileReader = new FileReader(file);
@@ -57,11 +54,10 @@ public class Main {
                     // Then output
                     try {
                         PrintWriter cookWriter = new PrintWriter(cookPath + fileName + cookExt);
-//                        PrintWriter manageWriter = new PrintWriter(managePath + fileName + manageExt);
                         for (int i = 0; i < names.length; i++)
                         {
                             cookWriter.println(names[i] + " " + nums[i] + " " + db.getStockChar(names[i], nums[i]));
-                            db.update(names[i], db.getStock(names[i]) - nums[i]);
+                            db.updateStock(names[i], db.getStock(names[i]) - nums[i], fileName, managePath);
                         }
                         cookWriter.close();
                     } catch (FileNotFoundException e) {
@@ -99,6 +95,16 @@ public class Main {
                 }
                 temp = temp.substring(temp.indexOf(' ') + 1);
             }
+        }
+    }
+
+    public static void emptyFolder (String path)
+    {
+        File folder = new File(path);
+        File[] files = folder.listFiles();
+        for (int i = 0; i < files.length; i++)
+        {
+            files[i].delete();
         }
     }
 }
