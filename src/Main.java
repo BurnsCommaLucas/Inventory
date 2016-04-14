@@ -3,18 +3,17 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
- * Created by Lucas on 4/3/16.
+ * FOR THE LOVE OF GOD RUN THIS ON A MAC, I HAVE NO IDEA IF IT WORKS ON PC
  */
 public class Main {
 
     public static Integer[] nums;
     public static String[] names;
     public static String[] raws;
-    public static String cookPath = "Test/Out/Cooks/"; //     ../../Dropbox/CS 341/
-    private static String managePath = "Test/Out/Mgmt/"; //     ../../Dropbox/CS 341/
+    public static String cookPath = "Test/Out/Cooks/"; //     MAKE THIS THE COOK FOLDER
+    public static String managePath = "Test/Out/Mgmt/"; //     MAKE THIS THE MANAGEMENT FOLDER
     public static String inPath = "Test/In/";
     public static String cookExt = ".txt";
-    public static String manageExt = ".txt";
     public static String fileName;
     public static Database db;
 
