@@ -57,7 +57,7 @@ public class Main {
                         for (int i = 0; i < names.length; i++)
                         {
                             cookWriter.println(names[i] + " " + nums[i] + " " + db.getStockChar(names[i], nums[i]));
-                            db.updateStock(names[i], db.getStock(names[i]) - nums[i], fileName, managePath);
+                            db.updateStock(names[i], db.getStock(names[i]) - nums[i], managePath);
                         }
                         cookWriter.close();
                     } catch (FileNotFoundException e) {

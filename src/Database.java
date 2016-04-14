@@ -1,4 +1,6 @@
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.PrintWriter;
 import java.util.HashMap;
 
@@ -15,10 +17,12 @@ import java.util.HashMap;
 public class Database {
 
 	public static HashMap<String, Integer> db; //Database Entries
+	public static HashMap<String, Integer> cost; //Cost entries
 	private final String[] INVENTORY = {"Chips", "Cheese", "Chicken", "FryingOil", "Breading", "Rice", "Spam", "Nori",
 			"Lettuce", "Croutons", "Dressing", "Miso", "Tofu", "Seaweed", "Egg", "Beef", "Gravy", "Garlic", "Shoyu",
 			"BreadBuns", "Oreo", "MochiPowder", "IceCream", "Water", "Coke", "RootBeer", "Jack", "Vodka", "Tonic",
 			"Apple", "SchmittySauce"};
+	private final int[] COST = {};//Need 31 items
 	private final int DEF = 200; //max quantity
 	
 	private static boolean sufficientQuantity = false;
@@ -32,6 +36,7 @@ public class Database {
 	 */
 	public Database(){
 		db=new HashMap<String, Integer>();
+		cost = new HashMap<String, Integer>();
 	}
 	
 	/***
@@ -41,8 +46,9 @@ public class Database {
 	 *
 	 * 		Adder function for the Database
 	 */
-	public void add(String key, int val){
+	public void add(String key, int val, int price){
 		db.put(key, val);
+		cost.put(key, price);
 	}
 
 	/***
@@ -108,7 +114,7 @@ public class Database {
 	 *
 	 * 		Utilize the update() function to update the database and send outputs accordingly.
 	 */
-	public void updateStock(String key, int newVal, String fileName, String path) {
+	public void updateStock(String key, int newVal, String path) {
 		if(sufficientQuantity == true) {
 			update(key, newVal);
 
@@ -120,11 +126,24 @@ public class Database {
 			}
 
 			if(lowStock = true) {
-				try {
-					PrintWriter manageWriter = new PrintWriter(path + fileName + ".txt");
-					manageWriter.println();
-					manageWriter.close();
-				} catch (FileNotFoundException e) {}
+				String managementPath = path + "InventoryManagement.txt";
+				File f = new File(managementPath);
+				if(f.exists() && !f.isDirectory()) {
+					try {
+						PrintWriter pw = new PrintWriter(new FileOutputStream(f, true));
+						pw.println
+					} catch(FileNotFoundException e) {
+					}
+				}
+				else {
+					try {
+						PrintWriter manageWriter = new PrintWriter(managementPath);
+						manageWriter.println("ItemOrdered,Quantity,Cost");
+						manageWriter.println(key + "," + (DEF - newVal) + "," + );
+						manageWriter.close();
+					} catch (FileNotFoundException e) {
+					}
+				}
 			}
 		}
 	}
