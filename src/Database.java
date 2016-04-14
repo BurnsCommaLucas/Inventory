@@ -22,11 +22,8 @@ public class Database {
 			"Lettuce", "Croutons", "Dressing", "Miso", "Tofu", "Seaweed", "Egg", "Beef", "Gravy", "Garlic", "Shoyu",
 			"BreadBuns", "Oreo", "MochiPowder", "IceCream", "Water", "Coke", "RootBeer", "Jack", "Vodka", "Tonic",
 			"Apple", "SchmittySauce"};
-	private final int[] COST = {};//Need 31 items
+	private final int[] COST = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1};//Need 31 items
 	private final int DEF = 200; //max quantity
-	
-	private static boolean sufficientQuantity = false;
-	private static boolean lowStock = false;
 
 	/***
 	 * @name: Database()
@@ -95,15 +92,10 @@ public class Database {
 		{
 			if (db.get(key) > amtReq)
 			{
-                sufficientQuantity = true;
 				return 'y';
-
 			}
-            sufficientQuantity = false;
 			return 'n';
-
 		}
-        sufficientQuantity = false;
 		return 'N';
 	}
 
@@ -115,36 +107,17 @@ public class Database {
 	 * 		Utilize the update() function to update the database and send outputs accordingly.
 	 */
 	public void updateStock(String key, int newVal, String path) {
-		if(sufficientQuantity == true) {
-			update(key, newVal);
-
-			if(newVal < 35) {
-				lowStock = true;
+		update(key, newVal);
+		String managementPath = path + "InventoryManagement.txt";
+		try {
+			PrintWriter manageWriter = new PrintWriter(managementPath);
+			manageWriter.println("ItemOrdered,Quantity,Cost");
+			for (int i = 0; i < INVENTORY.length; i ++) {
+				int sold = DEF - db.get(INVENTORY[i]);
+				manageWriter.println(INVENTORY[i] + "," + sold + "," + sold * cost.get(INVENTORY[i]));
 			}
-			else {
-				lowStock = false;
-			}
-
-			if(lowStock = true) {
-				String managementPath = path + "InventoryManagement.txt";
-				File f = new File(managementPath);
-				if(f.exists() && !f.isDirectory()) {
-					try {
-						PrintWriter pw = new PrintWriter(new FileOutputStream(f, true));
-						pw.println();
-					} catch(FileNotFoundException e) {
-					}
-				}
-				else {
-					try {
-						PrintWriter manageWriter = new PrintWriter(managementPath);
-						manageWriter.println("ItemOrdered,Quantity,Cost");
-						manageWriter.println(key + "," + (DEF - newVal) + "," + cost.get(key));
-						manageWriter.close();
-					} catch (FileNotFoundException e) {
-					}
-				}
-			}
+			manageWriter.close();
+		} catch (FileNotFoundException e) {
 		}
 	}
 }
