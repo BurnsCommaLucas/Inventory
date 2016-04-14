@@ -77,7 +77,7 @@ public class Database {
 	{
 		for (int i = 0; i < INVENTORY.length; i++)
 		{
-			add(INVENTORY[i], DEF);
+			add(INVENTORY[i], DEF, COST[i]);
 		}
 	}
 
@@ -131,7 +131,7 @@ public class Database {
 				if(f.exists() && !f.isDirectory()) {
 					try {
 						PrintWriter pw = new PrintWriter(new FileOutputStream(f, true));
-						pw.println
+						pw.println();
 					} catch(FileNotFoundException e) {
 					}
 				}
@@ -139,7 +139,7 @@ public class Database {
 					try {
 						PrintWriter manageWriter = new PrintWriter(managementPath);
 						manageWriter.println("ItemOrdered,Quantity,Cost");
-						manageWriter.println(key + "," + (DEF - newVal) + "," + );
+						manageWriter.println(key + "," + (DEF - newVal) + "," + cost.get(key));
 						manageWriter.close();
 					} catch (FileNotFoundException e) {
 					}
