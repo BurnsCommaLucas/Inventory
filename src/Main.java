@@ -10,8 +10,8 @@ public class Main {
 
     public static Integer[][] nums;
     public static String[] raws;
-    public static String cookPath = "../../Dropbox/CS 341/Cooks/"; //     MAKE THIS THE COOK FOLDER
-    public static String managePath = "Test/Out/Mgmt/"; //     MAKE THIS THE MANAGEMENT FOLDER
+    public static String cookPath = "../../Dropbox/CS 341/Cooks/";  //     MAKE THIS THE COOK FOLDER ../../Dropbox/CS 341/Cooks/
+    public static String managePath = "../../Dropbox/CS 341/Management/";             //     MAKE THIS THE MANAGEMENT FOLDER
     public static String inPath = "../../Dropbox/CS 341/Inventory/";
     public static String cookExt = ".txt";
     public static String fileName = "InventoryCook";
@@ -25,7 +25,7 @@ public class Main {
         db.init();
 
         TimerTask task = new DirWatcher(inPath, "txt") {
-                protected void onChange(File file, String action) {
+            protected void onChange(File file, String action) {
                 if (action == "add") {
                     raws = new String[] {};
                     meals = new HashMap<String, String[]>();

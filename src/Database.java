@@ -54,8 +54,9 @@ public class Database {
 	 * 		Function that updates an entry in the Database
 	 */
 	public void update(String key, int val){
-		if (db.get(key) - val < 0) { return; }
-		db.replace(key, val);
+		if (val < 0) { return; }
+		else
+			db.replace(key, val);
 	}
 
 	public boolean includes(Object key) { return db.containsKey(key); }
