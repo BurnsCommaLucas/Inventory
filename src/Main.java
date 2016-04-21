@@ -1,5 +1,4 @@
 import java.io.*;
-import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.HashMap;
 import static java.lang.Character.isDigit;
@@ -11,22 +10,17 @@ public class Main {
 
     public static Integer[][] nums;
     public static String[] raws;
-    public static String cookPath = "Test/Out/Cooks/"; //     MAKE THIS THE COOK FOLDER
+    public static String cookPath = "../../Dropbox/CS 341/Cooks/"; //     MAKE THIS THE COOK FOLDER
     public static String managePath = "Test/Out/Mgmt/"; //     MAKE THIS THE MANAGEMENT FOLDER
-    public static String inPath = "Test/In/";
+    public static String inPath = "../../Dropbox/CS 341/Inventory/";
     public static String cookExt = ".txt";
-    public static String fileName;
+    public static String fileName = "InventoryCook";
     public static Database db;
     public static HashMap<String, String[]> meals;
     public static String[] headers;
     public static int tableNumber;
 
     public static void main(String[] args) throws FileNotFoundException {
-        SimpleDateFormat ft = new SimpleDateFormat ("yyyy.MM.dd 'at' HH.mm.ss");
-
-        emptyFolder(cookPath);
-        emptyFolder(managePath);
-
         db = new Database();
         db.init();
 
@@ -34,8 +28,6 @@ public class Main {
                 protected void onChange(File file, String action) {
                 if (action == "add") {
                     raws = new String[] {};
-                    Date d = new Date();
-                    fileName = ft.format(d);
                     meals = new HashMap<String, String[]>();
                     headers = new String[] {};
 
@@ -149,16 +141,6 @@ public class Main {
                 }
             }
             meals.replace(headers[i], noNumbers);
-        }
-    }
-
-    public static void emptyFolder (String path)
-    {
-        File folder = new File(path);
-        File[] files = folder.listFiles();
-        for (int i = 0; i < files.length; i++)
-        {
-            files[i].delete();
         }
     }
 }
